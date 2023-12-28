@@ -26,10 +26,6 @@ const vilizeBranchStatus = (st: EBranchStatus) => {
             return "Đang hoạt động"
         case EBranchStatus.DELETED:
             return "Đã xóa"
-        case EBranchStatus.MAINTAINING:
-            return "Đang bảo trì"
-        case EBranchStatus.REJECTED:
-            return "Đã từ chối"
         case EBranchStatus.BLOCKED:
             return "Đã khóa"
         default:
