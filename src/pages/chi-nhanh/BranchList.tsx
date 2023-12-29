@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import IBranch, { EBranchStatus } from "@/interface/IBranch"
 import IOwner from "@/interface/IOwner"
+import { toAddress } from "@/lib/converter"
 import useBranchStore from "@/store/useBranchStore"
 import { vilizeBranchStatus } from "@/utils/status"
 import React, { useEffect, useState } from "react"
@@ -15,7 +16,7 @@ const BranchList = () => {
     useEffect(() => {
         _setBranches(branches)
     }, [branches])
-    const header = ["STT", "Tên chi nhánh", "Chủ", "Trạng thái"]
+    const header = ["STT", "Tên chi nhánh", "Địa chỉ", "Chủ", "Trạng thái"]
     const columns: ColumnProps<IBranch>[] = [
         {
             headRef: "STT",
@@ -24,6 +25,10 @@ const BranchList = () => {
         {
             headRef: "Tên chi nhánh",
             render: (branch) => branch.name
+        },
+        {
+            headRef: "Địa chỉ",
+            render: (branch) => toAddress(branch)
         },
         {
             headRef: "Chủ",

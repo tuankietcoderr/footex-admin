@@ -16,4 +16,5 @@ export default interface IReport<T = ITeam | IBranch | IGuest> {
     title: string
     status?: EReportStatus
     refPath?: string
+    createdAt?: Date
 }

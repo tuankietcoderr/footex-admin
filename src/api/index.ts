@@ -2,7 +2,11 @@
 import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key"
 import axios, { AxiosResponse } from "axios"
 const apiInstance = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "http://localhost:2003/api" : "https://footex.up.railway.app/api"
+    baseURL:
+        process.env.NODE_ENV === "development"
+            ? "http://localhost:2003/api"
+            : // : "http://localhost:2003/api"
+              "https://footex.up.railway.app/api" //! change this when deploy
 })
 
 apiInstance.interceptors.request.use(async (config) => {

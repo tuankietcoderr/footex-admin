@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import IGuest from "@/interface/IGuest"
 import IReport, { EReportStatus } from "@/interface/IReport"
+import { formatVietnameseDate } from "@/lib/date"
 import useReportStore from "@/store/useReportStore"
 import { vilizeReportStatus } from "@/utils/status"
 import React, { useEffect, useState } from "react"
@@ -16,11 +17,25 @@ const ReportPage = () => {
     useEffect(() => {
         _setReports(reports)
     }, [reports])
-    const header = ["STT", "Tiêu đề", "Lí do", "Người tố cáo", "Loại", "Đối tượng bị tố cáo", "Trạng thái", "Tùy chọn"]
+    const header = [
+        "STT",
+        "Thời gian",
+        "Tiêu đề",
+        "Lí do",
+        "Người tố cáo",
+        "Loại",
+        "Đối tượng bị tố cáo",
+        "Trạng thái",
+        "Tùy chọn"
+    ]
     const columns: ColumnProps<IReport>[] = [
         {
             headRef: "STT",
             render: (report, index) => index + 1
+        },
+        {
+            headRef: "Thời gian",
+            render: (report) => formatVietnameseDate(report.createdAt!, "HH:mm dd/MM/yyyy")
         },
         {
             headRef: "Tiêu đề",
