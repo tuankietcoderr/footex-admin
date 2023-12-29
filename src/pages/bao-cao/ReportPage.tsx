@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Table from "@/components/table"
 import { ColumnProps } from "@/components/table/table.type"
 import { Button } from "@/components/ui/button"
@@ -10,12 +11,12 @@ import { vilizeReportStatus } from "@/utils/status"
 import React, { useEffect, useState } from "react"
 
 const ReportPage = () => {
-    const { reports, updateReportStatus } = useReportStore()
+    const { reports, updateReportStatus, removeReport } = useReportStore()
     const [_reports, _setReports] = useState<IReport[]>(reports)
     useEffect(() => {
         _setReports(reports)
     }, [reports])
-    const header = ["STT", "Tiêu đề", "Lí do", "Người tố cáo", "Đối tượng bị tố cáo", "Trạng thái"]
+    const header = ["STT", "Tiêu đề", "Lí do", "Người tố cáo", "Loại", "Đối tượng bị tố cáo", "Trạng thái", "Tùy chọn"]
     const columns: ColumnProps<IReport>[] = [
         {
             headRef: "STT",
@@ -34,8 +35,12 @@ const ReportPage = () => {
             render: (report) => (report.reporter as IGuest)?.name ?? "Không xác định"
         },
         {
+            headRef: "Loại",
+            render: (report) => report.refPath
+        },
+        {
             headRef: "Đối tượng bị tố cáo",
-            render: (report) => (report.reported as IGuest)?.name
+            render: (report) => (report.reported as any)?.name
         },
         {
             headRef: "Trạng thái",
@@ -59,6 +64,14 @@ const ReportPage = () => {
                     </Select>
                 </div>
             )
+        },
+        {
+            headRef: "Tùy chọn",
+            render: (report) => (
+                <Button onClick={() => onRemove(report._id!)} variant='ghost' className='text-destructive'>
+                    Xóa
+                </Button>
+            )
         }
     ]
 
@@ -76,6 +89,10 @@ const ReportPage = () => {
 
     async function onUpdateStatus(id: string, status: EReportStatus) {
         await updateReportStatus(id, status)
+    }
+
+    async function onRemove(id: string) {
+        await removeReport(id)
     }
 
     return (
